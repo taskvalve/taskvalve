@@ -63,7 +63,10 @@ export class Redis implements IQueue {
 
         await redis.eval(
             luaScript,
-            [`sample_database_queues:${this.queue}`, `sample_database_queues:${this.queue}:notify`],
+            [
+                `${this.crypto.app.toLowerCase()}_database_queues:${this.queue}`,
+                `${this.crypto.app.toLowerCase()}_database_queues:${this.queue}:notify`
+            ],
             [JSON.stringify(job)]
         )
 

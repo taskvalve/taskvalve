@@ -1,7 +1,7 @@
 import { IModel } from './interface.ts'
 import { ICrypto } from '../crypto.ts'
 
-import { Client } from "https://deno.land/x/mysql/mod.ts";
+import { Client } from "https://deno.land/x/mysql/mod.ts"
 
 import { serialize } from '../serialize.ts'
 
@@ -32,9 +32,9 @@ export class MySQL implements IModel {
         const serializedArgs = template.replace(/s:4:"data";a:\d+:\{[^}]+\}/, `s:4:"data";${serialized}`);
         const hash = await this.crypto.hmac(serializedArgs)
 
-        const encoder = new TextEncoder();
-        const argsLength = encoder.encode(serializedArgs).length;
-        const hashLength = encoder.encode(hash).length;
+        const encoder = new TextEncoder()
+        const argsLength = encoder.encode(serializedArgs).length
+        const hashLength = encoder.encode(hash).length
 
         let serializedclosure = `O:47:"Laravel\\SerializableClosure\\SerializableClosure":1:{s:12:"serializable";O:46:"Laravel\\SerializableClosure\\Serializers\\Signed":2:{s:12:"serializable";s:${argsLength}:"${serializedArgs}";s:4:"hash";s:${hashLength}:"${hash}";}}`;
 
@@ -43,6 +43,6 @@ export class MySQL implements IModel {
             [storedWorkflowId, method, serializedclosure]
         );
 
-        await client.close();
+        await client.close()
     }
 }

@@ -4,18 +4,20 @@ import * as base64 from 'https://deno.land/std@0.202.0/encoding/base64.ts'
 import * as hex from 'https://deno.land/std@0.202.0/encoding/hex.ts'
 
 export interface ICrypto {
+    app: string
     encrypt(plaintext: string): Promise<{ iv: string, data: string, mac: string }>
     decrypt(data: string, mac: string): Promise<string>
     hmac(data: string): Promise<string>
 }
 
 export class DefaultCrypto implements ICrypto {
-    private iv: string;
+    private iv: string
 
     constructor(
+        public app: string,
         private secret: string
     ) {
-        this.iv = base64.encode(crypto.getRandomValues(new Uint8Array(16)));
+        this.iv = base64.encode(crypto.getRandomValues(new Uint8Array(16)))
     }
 
     async encrypt(plaintext: string): Promise<{ iv: string, data: string, mac: string }> {
