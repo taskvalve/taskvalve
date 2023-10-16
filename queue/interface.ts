@@ -1,5 +1,5 @@
 export interface IQueue {
     connection: string
     queue: string
-    push(workflowId: number): Promise<void>
+    push(workflowId: number, method: string, args: any[]): Promise<void>
 }

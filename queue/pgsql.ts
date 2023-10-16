@@ -22,7 +22,9 @@ export class PostgreSQL implements IQueue {
         public queue: string = 'default'
     ) {}
 
-    async push(workflowId: number): Promise<void> {
+    async push(workflowId: number, method: string, args: any[]): Promise<void> {
+        await this.model.insert(workflowId, method, args)
+
         const client = new Client({
             hostname: this.hostname,
             port: parseInt(this.port),
@@ -31,7 +33,7 @@ export class PostgreSQL implements IQueue {
             password: this.password,
         });
 
-        await client.connect();
+        await client.connect()
 
         const { iv, data, mac } = await this.crypto.encrypt(command({
             id: workflowId,
@@ -67,6 +69,6 @@ export class PostgreSQL implements IQueue {
             [this.queue, JSON.stringify(job), 0, Math.ceil(new Date().getTime() / 1000), Math.ceil(new Date().getTime() / 1000)]
         );
 
-        await client.end();
+        await client.end()
     }
 }

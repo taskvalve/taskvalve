@@ -19,7 +19,9 @@ export class Redis implements IQueue {
         public queue: string = 'default'
     ) {}
 
-    async push(workflowId: number): Promise<void> {
+    async push(workflowId: number, method: string, args: any[]): Promise<void> {
+        await this.model.insert(workflowId, method, args)
+
         const redis = await connect({
             hostname: this.hostname,
             port: this.port

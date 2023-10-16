@@ -22,7 +22,9 @@ export class MySQL implements IQueue {
         public queue: string = 'default'
     ) {}
 
-    async push(workflowId: number): Promise<void> {
+    async push(workflowId: number, method: string, args: any[]): Promise<void> {
+        await this.model.insert(workflowId, method, args)
+
         const client = await new Client().connect({
             hostname: this.hostname,
             port: parseInt(this.port),
