@@ -1,7 +1,7 @@
 # Usage
 
 ```typescript
-import * as taskvalve from "https://deno.land/x/taskvalve@1.0.1/mod.ts";
+import * as taskvalve from "https://deno.land/x/taskvalve@1.0.2/mod.ts";
 import { load } from "https://deno.land/std@0.204.0/dotenv/mod.ts";
 
 const env = await load()
