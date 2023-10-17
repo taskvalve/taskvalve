@@ -12,5 +12,7 @@ const queue = new taskvalve.queue.Redis(crypto, model, env['REDIS_HOST'], env['R
 
 const workflow = new taskvalve.WorkflowStub(queue)
 
-workflow.signal(1, 'setReady', [true])
+const workflowId = await workflow.start('App\\Workflows\\Simple\\SimpleWorkflow', [])
+
+await workflow.signal(workflowId, 'setReady', [true])
 ```
