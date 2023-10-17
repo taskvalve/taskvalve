@@ -22,6 +22,12 @@ export class PostgreSQL implements IQueue {
         public queue: string = 'default'
     ) {}
 
+    async start(workflowClass: string, args: any[]): Promise<number> {
+        const workflowId = await this.model.create(workflowClass, args)
+        await this.push(workflowId, 'currentTime', [])
+        return workflowId
+    }
+
     async push(workflowId: number, method: string, args: any[]): Promise<void> {
         await this.model.insert(workflowId, method, args)
 
