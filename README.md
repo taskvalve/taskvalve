@@ -19,8 +19,6 @@ const workflow = new taskvalve.WorkflowStub(queue)
 
 ```typescript
 const workflowId = await workflow.start('App\\Workflows\\Simple\\SimpleWorkflow', [])
-
-await workflow.signal(workflowId, 'setReady', [true])
 ```
 
 ## Signal Workflow
