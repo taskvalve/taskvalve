@@ -15,6 +15,8 @@ export class Redis implements IQueue {
         private model: IModel,
         private hostname: string = 'redis',
         private port: number = 6379,
+        private username?: string,
+        private password?: string,
         public connection: string = 'redis',
         public queue: string = 'default'
     ) {}
@@ -30,7 +32,9 @@ export class Redis implements IQueue {
 
         const redis = await connect({
             hostname: this.hostname,
-            port: this.port
+            port: this.port,
+            username: this.username,
+            password: this.password
         })
 
         const { iv, data, mac } = await this.crypto.encrypt(command({
